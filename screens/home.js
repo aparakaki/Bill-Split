@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.container2}>
                 <View style={styles.btnDiv}>
                     <Button
-                        onPress={() => navigate('Image')}
+                        onPress={() => navigate('Calculator', {people: [{name:"Bob"},{name: "Jess"}]})}
                         title="See Image"
                     />
                     <Button

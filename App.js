@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import HomeScreen from "./screens/home";
-import ImageScreen from "./screens/image"
+import CalculatorScreen from "./screens/calculator"
 
 export default class App extends React.Component{
   render() {
@@ -14,7 +14,7 @@ export default class App extends React.Component{
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Image: ImageScreen
+    Calculator: CalculatorScreen
   },
   {
     initialRouteName: "Home"
