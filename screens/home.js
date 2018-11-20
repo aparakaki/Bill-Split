@@ -10,7 +10,7 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={{alignItems:'center'}}>
-                    <Text style={styles.titleStyle}>Home Page</Text>
+                    <Text style={styles.titleStyle}>Hello!</Text>
                 </View>
                 <View style={styles.container2}>
                 <View style={styles.btnDiv}>
