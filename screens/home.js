@@ -8,13 +8,13 @@ export default class HomeScreen extends React.Component {
 
     state = {
         personCount: 2,
-        people: ["Me", "Person 1"]
+        people: [{name: "Me", items: [], total: 0}, {name: "Person 1", items: [], total: 0}]
     }
 
     addPeople = () => {
         this.setState({ personCount: this.state.personCount + 1 })
         var newPerson = `Person ${this.state.personCount}`
-        var peopleArr = this.state.people.concat(newPerson)
+        var peopleArr = this.state.people.concat({name: newPerson, items: [], total: 0})
         this.setState({ people: peopleArr })
         console.log(this.state.people);
     }
@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component {
                         return (
                             <View key={index + 1}>
                                 <Text
-                                key={element}>{element}</Text>
+                                key={element.name}>{element.name}</Text>
                                 <TextInput
                                 key = {index}
                                 placeholder = "Name"></TextInput>
