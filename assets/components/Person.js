@@ -5,16 +5,7 @@ export default class Person extends React.Component {
     constructor(props){
         super(props)
     }
-    state = {
-        newItem: null,
-    }
-
-    addItem = () => {
-        var itemsArray = this.state.items.concat(this.state.newItem)
-        this.setState({ items: itemsArray })
-        this.setState({newItem: null})
-
-    }
+ 
 
     componentDidMount(){
         console.log(this.props.people)
@@ -27,16 +18,18 @@ export default class Person extends React.Component {
                 return(
                 <Text
                 key ={index}
-                >{item}
-                </Text>
+                >${item}
+                </Text> 
                 )
             })}
-            <Text>Total</Text>
+            <Text>Total: ${this.props.people.total}</Text>
             <TextInput
             placeholder = "00.00"
             keyboardType = 'numeric'
-            value = {this.state.newItem}
+            //value = {this.props.newItem}
             onChangeText={(input) => this.props.handleItemChange(input)}
+            
+            
             
             />
             <Button

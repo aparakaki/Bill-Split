@@ -23,12 +23,23 @@ export default class ImageScreen extends React.Component {
     }
 
     addItem = (index) => {
-    console.log(index);
-    this.state.people[index].items.push(this.state.newItem)
+    if(this.state.newItem){
+        this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
+        //this.forceUpdate()
+        let total = 0;
+        this.state.people[index].items.forEach(item => {
+            total += parseFloat(item)
+        });
+        this.state.people[index].total = total;
+        this.setState({newItem: null})
+    }
+    // console.log(this.state.newItem)
+    console.log(this.state.people[index]);
 
     }
 
     handleItemChange = (input)=> {
+        
         this.setState({newItem: input})
     }
 
@@ -164,6 +175,7 @@ export default class ImageScreen extends React.Component {
                                 key={index} 
                                 id = {index}
                                 people = {element}
+                                //newItem = {this.state.newItem}
                                 handleItemChange = {this.handleItemChange}
                                 addItem = {() => this.addItem(index)}
                                 />
