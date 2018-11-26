@@ -47,31 +47,31 @@ export default class ImageScreen extends React.Component {
     }
 
     deleteItem = (personId, index) => {
-    console.log("delete")
-    console.log(personId)
-    console.log(index)
-    let deletedAmount = parseInt(this.state.people[personId].items[index])
-    let newTotal = this.state.currentTotal + deletedAmount
-    this.state.people[personId].items.splice(index, 1);
-    let personTotal = this.state.people[personId].total - deletedAmount
-    this.state.people[personId].total = personTotal
-    this.setState({currentTotal: newTotal }) 
-    console.log(this.state.people[personId].items)
+        console.log("delete")
+        console.log(personId)
+        console.log(index)
+        let deletedAmount = parseInt(this.state.people[personId].items[index])
+        let newTotal = this.state.currentTotal + deletedAmount
+        this.state.people[personId].items.splice(index, 1);
+        let personTotal = this.state.people[personId].total - deletedAmount
+        this.state.people[personId].total = personTotal
+        this.setState({ currentTotal: newTotal })
+        console.log(this.state.people[personId].items)
     }
 
-    handleItemChange = (input)=> {
+    handleItemChange = (input) => {
         this.setState({ newItem: input })
     }
 
     nextDisplay = () => {
         let display = this.state.currentDisplay;
-        if((display === 0 && this.state.totalBeforeTax > 0) || 
+        if ((display === 0 && this.state.totalBeforeTax > 0) ||
             display === 1 || display === 2) {
-                display += 1;
-                this.setState({
-                    currentDisplay: display
-                });
-            }
+            display += 1;
+            this.setState({
+                currentDisplay: display
+            });
+        }
     }
 
     prevDisplay = () => {
@@ -97,11 +97,32 @@ export default class ImageScreen extends React.Component {
             let tip = this.state.tipPercent / 100 * total;
             total += tax + tip;
             item.total = total;
+            item.tax = tax;
+            item.tip = tip;
         });
 
         this.setState({
             people: this.state.people,
             done: true
+        })
+    }
+
+    reset = () => {
+        this.state.people.forEach(item => {
+            item.total = 0;
+            item.items = []
+        });
+
+        this.setState({
+            totalBeforeTax: 0,       
+            currentTotal: null,             
+            tax: 0,
+            tip: 0,
+            tipPercent: 0,
+            people: this.state.people,
+            currentDisplay: 0,
+            newItem: null,
+            done: false             
         })
     }
 
@@ -181,24 +202,14 @@ export default class ImageScreen extends React.Component {
 
         let splitBtn;
         if (!this.state.done && this.state.currentDisplay === 3 && this.state.currentTotal !== 0) {
-            if (this.state.totalBeforeTax === this.state.currentTotal) {
-                splitBtn =
+            splitBtn =
+                <View>
+                    <Text>Remaining Amount: {this.state.currentTotal}</Text>
                     <Button
-                        title="Split Bill"
+                        title="Split"
                         onPress={this.splitBill}
                     />
-            }
-            else {
-                splitBtn =
-                    <View>
-                        <Text>Remaining Amount: {this.state.currentTotal}</Text>
-                        <Button
-                            title="Split"
-                            onPress={this.splitBill}
-                        />
-                    </View>
-            }
-
+                </View>
         }
 
         let peopleDsp;
@@ -229,6 +240,15 @@ export default class ImageScreen extends React.Component {
                 />
         }
 
+        let resetBtn;
+        if(this.state.done) {
+            resetBtn = 
+                <Button
+                    title="Reset"
+                    onPress={this.reset}
+                />
+        }
+
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 {inputDisplay}
@@ -239,7 +259,10 @@ export default class ImageScreen extends React.Component {
                 </View>
                 {getTotal}
                 {peopleDsp}
-
+                 
+                <View>
+                    {resetBtn}
+                </View> 
             </View>
         );
     }
