@@ -39,14 +39,22 @@ export default class Person extends React.Component {
         this.setState({ checked: !this.state.checked })
         this.props.handleChecked(id)
     }
-    render () {
-    return (
-        <View>
+
+    renderCheckboxes = () => {
+        if(this.props.selectSplit){
+            return (
             <CheckBox
             title = "split" 
             checked = {this.state.checked}
             onPress={() => this.setChecked(this.props.id)}
             /> 
+            )
+        }
+    }
+    render () {
+    return (
+        <View>
+            {this.renderCheckboxes()}
             <Text>{this.props.people.name} </Text>
             {this.props.people.items.map((item, index) => {
                 return(

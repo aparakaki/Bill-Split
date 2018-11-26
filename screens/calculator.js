@@ -17,8 +17,9 @@ export default class ImageScreen extends React.Component {
             currentDisplay: 0,
             newItem: null,
             done: false,                    //determines if bill has been split and finalized
+            
         }
-    }
+    }  
 
     componentDidMount() {
         console.log("start")
@@ -238,6 +239,7 @@ export default class ImageScreen extends React.Component {
                             deleteItem={(personId, index)=> this.deleteItem(personId, index)}
                             checked = {this.state.checked}
                             handleChecked = {(id) => this.handleChecked(id)}
+                            selectSplit = {this.state.selectSplit}
                         />
                     })} 
                 </View>
