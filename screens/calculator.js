@@ -1,6 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Button, TextInput } from 'react-native';
-import Person from "../assets/components/Person"
+import { Text, View, Button, TextInput } from 'react-native';
 
 export default class ImageScreen extends React.Component {
     constructor(props) {
@@ -12,35 +11,14 @@ export default class ImageScreen extends React.Component {
             tip: 0,                       
             tipPercent: 0,
             people: this.props.navigation.state.params.people,
-            currentDisplay: 0,
-            newItem: null
+            // display: ["getTotal", "getTax", "getTip"],
+            currentDisplay: 0
         }
     }
 
     componentDidMount() {
-        console.log("start")
-        console.log(this.state.people);
-    }
-
-    addItem = (index) => {
-    if(this.state.newItem){
-        this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
-        //this.forceUpdate()
-        let total = 0;
-        this.state.people[index].items.forEach(item => {
-            total += parseFloat(item)
-        });
-        this.state.people[index].total = total;
-        this.setState({newItem: null})
-    }
-    // console.log(this.state.newItem)
-    console.log(this.state.people[index]);
-
-    }
-
-    handleItemChange = (input)=> {
-        
-        this.setState({newItem: input})
+        console.log("start");
+        console.log(this.state.people)
     }
 
     nextDisplay = () => {
@@ -171,17 +149,9 @@ export default class ImageScreen extends React.Component {
                 </View>
                 <View>
                     {this.state.people.map((element, index) => {
-                        return <Person 
-                                key={index} 
-                                id = {index}
-                                people = {element}
-                                //newItem = {this.state.newItem}
-                                handleItemChange = {this.handleItemChange}
-                                addItem = {() => this.addItem(index)}
-                                />
+                        return <Text key={index}>{element.name}</Text>
                     })}
                 </View>
-            
             </View>
         );
     }

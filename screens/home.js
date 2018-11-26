@@ -13,10 +13,10 @@ export default class HomeScreen extends React.Component {
 
     addPeople = () => {
         this.setState({ personCount: this.state.personCount + 1 })
-        var newPerson = `Person ${this.state.personCount}`
+        var newPerson = `Person ${this.state.personCount}`;
         var peopleArr = this.state.people.concat({name: newPerson, items: [], total: 0})
         this.setState({ people: peopleArr })
-        console.log(this.state.people);
+        // console.log(this.state.people);
     }
 
     removePeople = () => {
@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
             this.setState({personCount: this.state.personCount - 1})
             var removePeopleArray = this.state.people.slice(0, this.state.people.length-1)
             this.setState({people: removePeopleArray})
-            console.log(this.state.people) 
+            // console.log(this.state.people) 
         }
         
     }
