@@ -8,17 +8,52 @@ export default class HomeScreen extends React.Component {
 
     state = {
         personCount: 2,
-        people: [{name: "Me", items: [], total: 0}, {name: "Person 1", items: [], total: 0}]
+        people: [{name: "Me", nameSet: false, items: [], tax:0, tip:0, total: 0}, {name: "Person 1", nameSet: false, items: [], tax:0, tip:0, total: 0}],
+        nameSet: null
     }
 
     addPeople = () => {
         this.setState({ personCount: this.state.personCount + 1 })
         var newPerson = `Person ${this.state.personCount}`;
-        var peopleArr = this.state.people.concat({name: newPerson, items: [], total: 0})
+        var peopleArr = this.state.people.concat({name: newPerson, nameSet: false,items: [], tax:0, tip:0, total: 0})
         this.setState({ people: peopleArr })
         // console.log(this.state.people);
     }
 
+    handleItemChange = (input) => {
+        this.setState({nameSet: input})
+    }
+    setName = (index) => {
+        console.log("set name") 
+        if(this.state.nameSet){
+            this.state.people[index].name = this.state.nameSet
+            this.state.people[index].nameSet = true
+            this.forceUpdate()
+        }
+        
+    }
+
+    renderNameInput = (index) => {
+        if(!this.state.people[index].nameSet){
+            return (
+                <View>
+                    <TextInput
+                    key = {index}
+                    placeholder = "Name"
+                    onChangeText={(input) => this.handleItemChange(input)}
+                    > 
+                    
+                    </TextInput>
+                    <Button
+                    title = "submit"
+                    onPress = {() => this.setName(index)}
+                    >
+
+                    </Button>
+                </View>
+            )
+        }
+    }
     removePeople = () => {
         if(this.state.personCount > 2){
             this.setState({personCount: this.state.personCount - 1})
@@ -27,6 +62,15 @@ export default class HomeScreen extends React.Component {
             // console.log(this.state.people) 
         }
         
+    }
+
+    reset = () => {
+        this.setState({
+        personCount: 2,
+        people: [{name: "Me", nameSet: false, items: [], tax:0, tip:0, total: 0}, {name: "Person 1", nameSet: false, items: [], tax:0, tip:0, total: 0}],
+        nameSet: null
+        });
+
     }
     render() {
         const { navigate } = this.props.navigation;
@@ -49,13 +93,17 @@ export default class HomeScreen extends React.Component {
                             <View key={index + 1}>
                                 <Text
                                 key={element.name}>{element.name}</Text>
-                                <TextInput
-                                key = {index}
-                                placeholder = "Name"></TextInput>
+                              {this.renderNameInput(index)}
                             </View>
                                 );
                     })}
                 </View>
+                <Button
+                title = "reset"
+                onPress = {this.reset}
+                >
+
+                </Button>
                 <View style={styles.container2}>
                     <View style={styles.btnDiv}>
                         <Button

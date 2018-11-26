@@ -6,7 +6,26 @@ export default class Person extends React.Component {
         super(props)
     }
  
-
+    renderInputBox = () => {
+        if(this.props.currentTotal > 0){
+            return(
+                <View>
+                <TextInput
+                placeholder = "00.00"
+                keyboardType = 'numeric'
+                returnKeyType='done'
+                //value = {this.props.newItem}
+                onChangeText={(input) => this.props.handleItemChange(input)}
+            
+                />
+                <Button
+                title = "Add"
+                onPress = {this.props.addItem}
+                />
+                </View>
+            )
+        }
+    }
     componentDidMount(){
         // console.log(this.props.people)
     }
@@ -32,20 +51,8 @@ export default class Person extends React.Component {
                 )
             })}
             <Text>Total: ${this.props.people.total}</Text>
-            <TextInput
-            placeholder = "00.00"
-            keyboardType = 'numeric'
-            returnKeyType='done'
-            //value = {this.props.newItem}
-            onChangeText={(input) => this.props.handleItemChange(input)}
             
-            
-            
-            />
-            <Button
-            title = "Add"
-            onPress = {this.props.addItem}
-            />
+            {this.renderInputBox()}
             
         </View>
     ) 

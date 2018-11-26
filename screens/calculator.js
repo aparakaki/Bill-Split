@@ -210,11 +210,13 @@ export default class ImageScreen extends React.Component {
                             key={index}
                             id={index}
                             people={element}
+                            currentTotal = {this.state.currentTotal}
                             //newItem = {this.state.newItem}
                             handleItemChange={this.handleItemChange}
                             addItem={() => this.addItem(index)}
+                            deleteItem={(personId, index)=> this.deleteItem(personId, index)}
                         />
-                    })}
+                    })} 
                 </View>
         }
 
