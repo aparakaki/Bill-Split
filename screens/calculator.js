@@ -42,6 +42,19 @@ export default class ImageScreen extends React.Component {
 
     }
 
+    deleteItem = (personId, index) => {
+    console.log("delete")
+    console.log(personId)
+    console.log(index)
+    let deletedAmount = parseInt(this.state.people[personId].items[index])
+    let newTotal = this.state.currentTotal + deletedAmount
+    this.state.people[personId].items.splice(index, 1);
+    let personTotal = this.state.people[personId].total - deletedAmount
+    this.state.people[personId].total = personTotal
+    this.setState({currentTotal: newTotal }) 
+    console.log(this.state.people[personId].items)
+    }
+
     handleItemChange = (input)=> {
         
         this.setState({newItem: input})
@@ -194,6 +207,7 @@ export default class ImageScreen extends React.Component {
                                 //newItem = {this.state.newItem}
                                 handleItemChange = {this.handleItemChange}
                                 addItem = {() => this.addItem(index)}
+                                deleteItem = {(personId, index) => this.deleteItem(personId, index)}
                                 />
                     })}
                 </View>

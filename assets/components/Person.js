@@ -16,10 +16,19 @@ export default class Person extends React.Component {
             <Text>{this.props.people.name} </Text>
             {this.props.people.items.map((item, index) => {
                 return(
-                <Text
-                key ={index}
-                >${item}
-                </Text> 
+                <View 
+                key = {index + 1}>
+                    <Text
+                    key ={index}
+                    >${item} 
+                    </Text> 
+                    <Button
+                    key = {item}
+                    title = "x"
+                    onPress = {() => this.props.deleteItem(this.props.id, index)}
+                    >
+                    </Button>
+                </View>
                 )
             })}
             <Text>Total: ${this.props.people.total}</Text>
