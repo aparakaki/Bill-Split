@@ -7,51 +7,59 @@ export default class ImageScreen extends React.Component {
         super(props);
         this.state = {
             totalBeforeTax: 0,            //user input total
-            currentTotal: 0,              //total after plates have been divided
+            currentTotal: null,              //total after plates have been divided
             tax: 0,
-            tip: 0,                       
+            tip: 0,
             tipPercent: 0,
             people: this.props.navigation.state.params.people,
             currentDisplay: 0,
-            newItem: null
+            newItem: null,
+            done: false                    //determines if bill has been split and finalized
         }
     }
 
     componentDidMount() {
         console.log("start")
-        console.log(this.state.people);
+        // console.log(this.state.people);
     }
 
     addItem = (index) => {
-    if(this.state.newItem){
-        this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
-        //this.forceUpdate()
-        let total = 0;
-        this.state.people[index].items.forEach(item => {
-            total += parseFloat(item)
-        });
-        this.state.people[index].total = total;
-        let newTotal = this.state.currentTotal - total;
-        this.setState({
-            newItem: null,
-            currentTotal: newTotal
-        })
-    }
-    // console.log(this.state.newItem)
-    console.log(this.state.people[index]);
+        console.log("add item")
+        console.log("current: " + this.state.currentTotal)
+        console.log("new item: " + this.state.newItem)
+        if (this.state.newItem <= this.state.currentTotal) {
+            this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
+            //this.forceUpdate()
+            let total = 0;
+            this.state.people[index].items.forEach(item => {
+                total += parseFloat(item)
+            });
+            this.state.people[index].total = total;
+            let newTotal = this.state.currentTotal - this.state.newItem;
+            this.setState({
+                newItem: null,
+                currentTotal: newTotal
+            })
+        }
+        // console.log(this.state.newItem)
+        console.log(this.state.people[index]);
 
     }
 
-    handleItemChange = (input)=> {
-        
-        this.setState({newItem: input})
+    handleItemChange = (input) => {
+
+        this.setState({ newItem: input })
     }
 
     nextDisplay = () => {
-        let display = this.state.currentDisplay + 1;
-        this.setState({
-            currentDisplay: display
-        });
+        let display = this.state.currentDisplay;
+        if((display === 0 && this.state.totalBeforeTax > 0) || 
+            display === 1 || display === 2) {
+                display += 1;
+                this.setState({
+                    currentDisplay: display
+                });
+            }
     }
 
     prevDisplay = () => {
@@ -63,7 +71,7 @@ export default class ImageScreen extends React.Component {
 
     setTipAmount = (percentage) => {
         let tip = this.state.totalBeforeTax * percentage / 100.0
-        this.setState({tip})
+        this.setState({ tip })
     }
 
     splitBill = () => {
@@ -79,7 +87,10 @@ export default class ImageScreen extends React.Component {
             item.total = total;
         });
 
-        this.setState({people: this.state.people})
+        this.setState({
+            people: this.state.people,
+            done: true
+        })
     }
 
     render() {
@@ -120,9 +131,9 @@ export default class ImageScreen extends React.Component {
                     <Text>Tax: {this.state.tax}</Text>
                     <Text>Tip: </Text>
                     <TextInput
-                        onChangeText={(input) => {this.setState({ tipPercent: input }); this.setTipAmount(input)}}
+                        onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
                         style={{ backgroundColor: '#afccdb' }}
-                        placeholder="%"
+                        placeholder="Enter Percentage"
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
                         returnKeyType='done'
@@ -140,7 +151,7 @@ export default class ImageScreen extends React.Component {
         }
 
         let nextBtn;
-        if(this.state.currentDisplay < 3) {
+        if (this.state.currentDisplay < 3) {
             nextBtn =
                 <Button
                     title="Next"
@@ -148,7 +159,7 @@ export default class ImageScreen extends React.Component {
                 />
         }
         let prevBtn;
-        if(this.state.currentDisplay > 0) {
+        if (this.state.currentDisplay > 0) {
             prevBtn =
                 <Button
                     title="Prev"
@@ -157,8 +168,8 @@ export default class ImageScreen extends React.Component {
         }
 
         let splitBtn;
-        if(this.state.currentDisplay === 3 && this.state.currentTotal !== 0){
-            if(this.state.totalBeforeTax === this.state.currentTotal) {
+        if (!this.state.done && this.state.currentDisplay === 3 && this.state.currentTotal !== 0) {
+            if (this.state.totalBeforeTax === this.state.currentTotal) {
                 splitBtn =
                     <Button
                         title="Split Bill"
@@ -175,6 +186,33 @@ export default class ImageScreen extends React.Component {
                         />
                     </View>
             }
+
+        }
+
+        let peopleDsp;
+        if (this.state.currentDisplay === 3) {
+            peopleDsp =
+                <View>
+                    {this.state.people.map((element, index) => {
+                        return <Person
+                            key={index}
+                            id={index}
+                            people={element}
+                            //newItem = {this.state.newItem}
+                            handleItemChange={this.handleItemChange}
+                            addItem={() => this.addItem(index)}
+                        />
+                    })}
+                </View>
+        }
+
+        let getTotal;
+        if (!this.state.done && this.state.currentTotal === 0) {
+            getTotal =
+                <Button
+                    title="Calculate Totals"
+                    onPress={this.splitBill}
+                />
         }
 
         return (
@@ -185,19 +223,9 @@ export default class ImageScreen extends React.Component {
                     {prevBtn}
                     {splitBtn}
                 </View>
-                <View>
-                    {this.state.people.map((element, index) => {
-                        return <Person 
-                                key={index} 
-                                id = {index}
-                                people = {element}
-                                //newItem = {this.state.newItem}
-                                handleItemChange = {this.handleItemChange}
-                                addItem = {() => this.addItem(index)}
-                                />
-                    })}
-                </View>
-            
+                {getTotal}
+                {peopleDsp}
+
             </View>
         );
     }
