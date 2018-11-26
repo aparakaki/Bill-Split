@@ -26,6 +26,7 @@ export default class Person extends React.Component {
             <TextInput
             placeholder = "00.00"
             keyboardType = 'numeric'
+            returnKeyType='done'
             //value = {this.props.newItem}
             onChangeText={(input) => this.props.handleItemChange(input)}
             

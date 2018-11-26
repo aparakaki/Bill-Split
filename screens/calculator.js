@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Image, Text, View, Button, TextInput } from 'react-native';
+import Person from "../assets/components/Person"
 
 export default class ImageScreen extends React.Component {
     constructor(props) {
@@ -11,14 +12,39 @@ export default class ImageScreen extends React.Component {
             tip: 0,                       
             tipPercent: 0,
             people: this.props.navigation.state.params.people,
-            // display: ["getTotal", "getTax", "getTip"],
-            currentDisplay: 0
+            currentDisplay: 0,
+            newItem: null
         }
     }
 
     componentDidMount() {
-        console.log("start");
-        console.log(this.state.people)
+        console.log("start")
+        console.log(this.state.people);
+    }
+
+    addItem = (index) => {
+    if(this.state.newItem){
+        this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
+        //this.forceUpdate()
+        let total = 0;
+        this.state.people[index].items.forEach(item => {
+            total += parseFloat(item)
+        });
+        this.state.people[index].total = total;
+        let newTotal = this.state.currentTotal - total;
+        this.setState({
+            newItem: null,
+            currentTotal: newTotal
+        })
+    }
+    // console.log(this.state.newItem)
+    console.log(this.state.people[index]);
+
+    }
+
+    handleItemChange = (input)=> {
+        
+        this.setState({newItem: input})
     }
 
     nextDisplay = () => {
@@ -41,7 +67,19 @@ export default class ImageScreen extends React.Component {
     }
 
     splitBill = () => {
-    
+        console.log("split bill");
+        let splitAmount = this.state.currentTotal / this.state.people.length;
+        this.state.people.forEach(item => {
+            let total = item.total;
+            total += splitAmount;
+            let taxP = total / this.state.totalBeforeTax;
+            let tax = taxP * this.state.tax;
+            let tip = this.state.tipPercent / 100 * total;
+            total += tax + tip;
+            item.total = total;
+        });
+
+        this.setState({people: this.state.people})
     }
 
     render() {
@@ -54,7 +92,7 @@ export default class ImageScreen extends React.Component {
                         onChangeText={(input) => this.setState({ totalBeforeTax: input, currentTotal: input })}
                         style={{ backgroundColor: '#afccdb' }}
                         placeholder="0.00"
-                        value={`${this.state.totalBeforeTax}`}
+                        // value={`${this.state.totalBeforeTax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
                     />
@@ -69,7 +107,7 @@ export default class ImageScreen extends React.Component {
                         onChangeText={(input) => this.setState({ tax: input })}
                         style={{ backgroundColor: '#afccdb' }}
                         placeholder="0.00"
-                        value={`${this.state.tax}`}
+                        // value={`${this.state.tax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
                     />
@@ -84,8 +122,8 @@ export default class ImageScreen extends React.Component {
                     <TextInput
                         onChangeText={(input) => {this.setState({ tipPercent: input }); this.setTipAmount(input)}}
                         style={{ backgroundColor: '#afccdb' }}
-                        placeholder="0.00"
-                        value={`${this.state.tipPercent}`}
+                        placeholder="%"
+                        // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
                         returnKeyType='done'
                     />
@@ -149,9 +187,17 @@ export default class ImageScreen extends React.Component {
                 </View>
                 <View>
                     {this.state.people.map((element, index) => {
-                        return <Text key={index}>{element.name}</Text>
+                        return <Person 
+                                key={index} 
+                                id = {index}
+                                people = {element}
+                                //newItem = {this.state.newItem}
+                                handleItemChange = {this.handleItemChange}
+                                addItem = {() => this.addItem(index)}
+                                />
                     })}
                 </View>
+            
             </View>
         );
     }
