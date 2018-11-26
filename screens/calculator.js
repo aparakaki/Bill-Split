@@ -17,6 +17,8 @@ export default class ImageScreen extends React.Component {
             currentDisplay: 0,
             newItem: null,
             done: false,                    //determines if bill has been split and finalized
+            splitOpts: false,
+            selectSplit: false
         }
     }
 
@@ -98,17 +100,22 @@ export default class ImageScreen extends React.Component {
 
     splitBill = () => {
         console.log("split bill");
-        let splitAmount = this.state.currentTotal / this.state.people.length;
+        let splitAmount;
+        if(!this.state.selectSplit) {
+            splitAmount = this.state.currentTotal / this.state.people.length;
+        }
         this.state.people.forEach(item => {
-            let total = item.total;
-            total += splitAmount;
-            let taxP = total / this.state.totalBeforeTax;
-            let tax = taxP * this.state.tax;
-            let tip = this.state.tipPercent / 100 * total;
-            total += tax + tip;
-            item.total = total;
-            item.tax = tax;
-            item.tip = tip;
+            if(!this.state.selectSplit || (this.state.selectSplit && item.checked)) {
+                let total = item.total;
+                total += splitAmount;
+                let taxP = total / this.state.totalBeforeTax;
+                let tax = taxP * this.state.tax;
+                let tip = this.state.tipPercent / 100 * total;
+                total += tax + tip;
+                item.total = total;
+                item.tax = tax;
+                item.tip = tip;
+            }
         });
 
         this.setState({
@@ -212,14 +219,40 @@ export default class ImageScreen extends React.Component {
 
         let splitBtn;
         if (!this.state.done && this.state.currentDisplay === 3 && this.state.currentTotal !== 0) {
+            if(!this.state.splitOpts) {
             splitBtn =
                 <View>
                     <Text>Remaining Amount: {this.state.currentTotal}</Text>
                     <Button
                         title="Split"
-                        onPress={this.splitBill}
+                        onPress={() => this.setState({splitOpts: true})}
                     />
                 </View>
+            }
+            else if (this.state.selectSplit) {
+                splitBtn =
+                    <View>
+                        <Text>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Button
+                            title="Split"
+                            onPress={this.splitBill}
+                        />
+                    </View>
+            }
+            else {
+                splitBtn = 
+                    <View>
+                        <Text>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Button
+                            title="With Everyone"
+                            onPress={this.splitBill}
+                        />
+                        <Button
+                            title="Select People"
+                            onPress={() => this.setState({selectSplit: true})}
+                        />
+                    </View>
+            }
         }
 
         let peopleDsp;
