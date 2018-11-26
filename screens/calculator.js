@@ -126,11 +126,23 @@ export default class ImageScreen extends React.Component {
                 item.tax = tax;
                 item.tip = tip;
             }
+            else if (this.state.selectSplit && !item.checked) {
+                let total = item.total;
+                let taxP = total / this.state.totalBeforeTax;
+                let tax = taxP * this.state.tax;
+                let tip = this.state.tipPercent / 100 * total;
+                total += tax + tip;
+                item.total = total;
+                item.tax = tax;
+                item.tip = tip;
+            }
         });
 
         this.setState({
             people: this.state.people,
-            done: true
+            done: true,
+            splitOpts: false,
+            selectSplit: false
         })
     }
 
@@ -149,7 +161,9 @@ export default class ImageScreen extends React.Component {
             people: this.state.people,
             currentDisplay: 0,
             newItem: null,
-            done: false             
+            done: false,
+            splitOpts: false,
+            selectSplit: false             
         })
     }
 
@@ -266,6 +280,7 @@ export default class ImageScreen extends React.Component {
         }
 
         let peopleDsp;
+        let resetBtn;
         if (this.state.currentDisplay === 3) {
             peopleDsp =
                 <View>
@@ -285,6 +300,12 @@ export default class ImageScreen extends React.Component {
                         />
                     })} 
                 </View>
+        
+            resetBtn = 
+                <Button
+                    title="Reset"
+                    onPress={this.reset}
+                />
         }
 
         let getTotal;
@@ -293,15 +314,6 @@ export default class ImageScreen extends React.Component {
                 <Button
                     title="Calculate Totals"
                     onPress={this.splitBill}
-                />
-        }
-
-        let resetBtn;
-        if(this.state.done) {
-            resetBtn = 
-                <Button
-                    title="Reset"
-                    onPress={this.reset}
                 />
         }
 
