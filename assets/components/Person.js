@@ -8,7 +8,7 @@ export default class Person extends React.Component {
  
 
     componentDidMount(){
-        console.log(this.props.people)
+        // console.log(this.props.people)
     }
     render () {
     return (
