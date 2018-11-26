@@ -104,6 +104,16 @@ export default class ImageScreen extends React.Component {
         if(!this.state.selectSplit) {
             splitAmount = this.state.currentTotal / this.state.people.length;
         }
+        else {
+            let count = 0;
+            this.state.people.forEach(item => {
+                if(item.checked) {
+                    count++;
+                }
+            })
+            splitAmount = this.state.currentTotal / count;
+        }
+        
         this.state.people.forEach(item => {
             if(!this.state.selectSplit || (this.state.selectSplit && item.checked)) {
                 let total = item.total;
