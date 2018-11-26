@@ -61,6 +61,10 @@ export default class Person extends React.Component {
                 <View 
                 key = {index + 1}>
                     <Text
+                    key ={index + 2}
+                    >Items
+                    </Text>
+                    <Text
                     key ={index}
                     >${item} 
                     </Text> 
@@ -72,8 +76,10 @@ export default class Person extends React.Component {
                     </Button>
                 </View>
                 )
-            })}
-            <Text>Total: ${this.props.people.total}</Text>
+            })} 
+            <Text>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
+            <Text>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
+            <Text>Total: ${(this.props.people.total).toFixed(2)}</Text>
             
             {this.renderInputBox()}
             
