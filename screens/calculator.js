@@ -25,9 +25,9 @@ export default class ImageScreen extends React.Component {
 
     addItem = (index) => {
         console.log("add item")
-        console.log("current: " + this.state.currentTotal)
-        console.log("new item: " + this.state.newItem)
-        if (this.state.newItem <= this.state.currentTotal) {
+        // console.log("current: " + this.state.currentTotal)
+        // console.log("new item: " + this.state.newItem)
+        if (this.state.newItem && parseFloat(this.state.newItem) <= parseFloat(this.state.currentTotal)) {
             this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
             //this.forceUpdate()
             let total = 0;
@@ -37,7 +37,7 @@ export default class ImageScreen extends React.Component {
             this.state.people[index].total = total;
             let newTotal = this.state.currentTotal - this.state.newItem;
             this.setState({
-                newItem: null,
+                // newItem: null,
                 currentTotal: newTotal
             })
         }
