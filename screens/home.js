@@ -8,14 +8,14 @@ export default class HomeScreen extends React.Component {
 
     state = {
         personCount: 2,
-        people: [{name: "Me", nameSet: false, items: [], tax:0, tip:0, total: 0}, {name: "Person 1", nameSet: false, items: [], tax:0, tip:0, total: 0}],
+        people: [{name: "Me", nameSet: false, checked: false, items: [], tax:0, tip:0, total: 0}, {name: "Person 1", nameSet: false, checked: false, items: [], tax:0, tip:0, total: 0}],
         nameSet: null
     }
 
     addPeople = () => {
         this.setState({ personCount: this.state.personCount + 1 })
         var newPerson = `Person ${this.state.personCount}`;
-        var peopleArr = this.state.people.concat({name: newPerson, nameSet: false,items: [], tax:0, tip:0, total: 0})
+        var peopleArr = this.state.people.concat({name: newPerson, nameSet: false, checked: false, items: [], tax:0, tip:0, total: 0})
         this.setState({ people: peopleArr })
         // console.log(this.state.people);
     }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, Text, View, Button, TextInput } from 'react-native';
-import Person from "../assets/components/Person"
+import Person from "../assets/components/Person";
+
+
 
 export default class ImageScreen extends React.Component {
     constructor(props) {
@@ -14,7 +16,7 @@ export default class ImageScreen extends React.Component {
             people: this.props.navigation.state.params.people,
             currentDisplay: 0,
             newItem: null,
-            done: false                    //determines if bill has been split and finalized
+            done: false,                    //determines if bill has been split and finalized
         }
     }
 
@@ -23,6 +25,14 @@ export default class ImageScreen extends React.Component {
         // console.log(this.state.people);
     }
 
+    handleChecked = (id) => {
+        console.log(this.state.people[id]);
+        console.log(id);
+        this.state.people[id].checked = !this.state.people[id].checked
+        this.forceUpdate();
+        console.log(this.state.people[id]);
+        
+    }
     addItem = (index) => {
         console.log("add item")
         // console.log("current: " + this.state.currentTotal)
@@ -226,6 +236,8 @@ export default class ImageScreen extends React.Component {
                             handleItemChange={this.handleItemChange}
                             addItem={() => this.addItem(index)}
                             deleteItem={(personId, index)=> this.deleteItem(personId, index)}
+                            checked = {this.state.checked}
+                            handleChecked = {(id) => this.handleChecked(id)}
                         />
                     })} 
                 </View>
@@ -263,6 +275,7 @@ export default class ImageScreen extends React.Component {
                 <View>
                     {resetBtn}
                 </View> 
+
             </View>
         );
     }

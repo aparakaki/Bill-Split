@@ -1,9 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { CheckBox } from 'react-native-elements';
+
 
 export default class Person extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
+        this.state = {
+            checked: false
+        }
     }
  
     renderInputBox = () => {
@@ -29,9 +34,19 @@ export default class Person extends React.Component {
     componentDidMount(){
         // console.log(this.props.people)
     }
+
+    setChecked = (id) => {
+        this.setState({ checked: !this.state.checked })
+        this.props.handleChecked(id)
+    }
     render () {
     return (
         <View>
+            <CheckBox
+            title = "split" 
+            checked = {this.state.checked}
+            onPress={() => this.setChecked(this.props.id)}
+            /> 
             <Text>{this.props.people.name} </Text>
             {this.props.people.items.map((item, index) => {
                 return(
