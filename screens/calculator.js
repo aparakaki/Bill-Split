@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Text, View, Button, TextInput } from 'react-native';
+import { Image, Text, View, TextInput } from 'react-native';
+import { Button } from 'react-native-elements';
 import Person from "../assets/components/Person";
 import styles from "../assets/css/calculator";
 
@@ -185,7 +186,7 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 1) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
                     <Text style={styles.textLabel}>Tax: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ tax: input })}
@@ -200,13 +201,14 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 2) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
-                    <Text style={styles.textLabel}>Tax: {this.state.tax}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax}</Text>
                     <Text style={styles.textLabel}>Tip: </Text>
                     <TextInput
                         onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
                         style={styles.textInput}
                         placeholder="Enter Percentage"
+                        placeholderTextColor='#ffffff'
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
                         returnKeyType='done'
@@ -216,9 +218,9 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 3) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
-                    <Text style={styles.textLabel}>Tax: {this.state.tax}</Text>
-                    <Text style={styles.textLabel}>Tip: {this.state.tip}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax}</Text>
+                    <Text style={styles.textLabel}>Tip: ${this.state.tip}</Text>
 
                 </View>
         }
@@ -229,15 +231,18 @@ export default class ImageScreen extends React.Component {
                 <Button
                     title="Next"
                     onPress={this.nextDisplay}
-                    styleButton={{ backgroundColor: 'white' }}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonTitle}
                 />
         }
         let prevBtn;
-        if (this.state.currentDisplay > 0) {
+        if (this.state.currentDisplay > 0 && !this.state.done) {
             prevBtn =
                 <Button
                     title="Prev"
                     onPress={this.prevDisplay}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonTitle}
                 />
         }
 
@@ -250,31 +255,41 @@ export default class ImageScreen extends React.Component {
                         <Button
                             title="Split"
                             onPress={() => this.setState({ splitOpts: true })}
+                            buttonStyle={styles.button}
+                            titleStyle={styles.buttonTitle}
                         />
                     </View>
             }
             else if (this.state.selectSplit) {
                 splitBtn =
                     <View>
-                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal}</Text>
                         <Button
                             title="Split"
                             onPress={this.splitBill}
+                            buttonStyle={styles.button}
+                            titleStyle={styles.buttonTitle}
                         />
                     </View>
             }
             else {
                 splitBtn =
-                    <View>
-                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
-                        <Button
-                            title="With Everyone"
-                            onPress={this.splitBill}
-                        />
-                        <Button
-                            title="Select People"
-                            onPress={() => this.setState({ selectSplit: true })}
-                        />
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <View style={styles.btnContainer}>
+                            <Button
+                                title="With Everyone"
+                                onPress={this.splitBill}
+                                buttonStyle={styles.button}
+                                titleStyle={styles.buttonTitle}
+                            />
+                            <Button
+                                title="Select People"
+                                onPress={() => this.setState({ selectSplit: true })}
+                                buttonStyle={styles.button}
+                                titleStyle={styles.buttonTitle}
+                            />
+                        </View>
                     </View>
             }
         }
@@ -305,6 +320,8 @@ export default class ImageScreen extends React.Component {
                 <Button
                     title="Reset"
                     onPress={this.reset}
+                    buttonStyle={styles.resetBtn}
+                    titleStyle={styles.buttonTitle}
                 />
         }
 
@@ -314,6 +331,8 @@ export default class ImageScreen extends React.Component {
                 <Button
                     title="Calculate Totals"
                     onPress={this.splitBill}
+                    buttonStyle={styles.button}
+                    titleStyle={styles.buttonTitle}
                 />
         }
 
@@ -323,15 +342,19 @@ export default class ImageScreen extends React.Component {
                     <View style={styles.inputContainer}>
                         {inputDisplay}
                     </View>
-                    <View style={styles.inputContainer}>
-                        {nextBtn}
+                    <View style={styles.btnContainer}>
                         {prevBtn}
+                        {nextBtn}
+                    </View>
+                    <View style={styles.splitContainer}>
                         {splitBtn}
+                        {getTotal}
                     </View>
                 </View>
-                {getTotal}
                 <View style={{ flex: 2, backgroundColor: "#dcc7aa" }}>
-                    {peopleDsp}
+                    <View style={styles.peopleContainer}>
+                        {peopleDsp}
+                    </View>
                     <View>
                         {resetBtn}
                     </View>
