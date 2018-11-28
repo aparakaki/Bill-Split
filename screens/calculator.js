@@ -1,8 +1,7 @@
 import React from 'react';
 import { Image, Text, View, Button, TextInput } from 'react-native';
 import Person from "../assets/components/Person";
-
-
+import styles from "../assets/css/calculator";
 
 export default class ImageScreen extends React.Component {
     constructor(props) {
@@ -20,7 +19,7 @@ export default class ImageScreen extends React.Component {
             splitOpts: false,
             selectSplit: false
         }
-    }  
+    }
 
     componentDidMount() {
         console.log("start")
@@ -33,7 +32,7 @@ export default class ImageScreen extends React.Component {
         this.state.people[id].checked = !this.state.people[id].checked
         this.forceUpdate();
         console.log(this.state.people[id]);
-        
+
     }
     addItem = (index) => {
         console.log("add item")
@@ -101,21 +100,21 @@ export default class ImageScreen extends React.Component {
     splitBill = () => {
         console.log("split bill");
         let splitAmount;
-        if(!this.state.selectSplit) {
+        if (!this.state.selectSplit) {
             splitAmount = this.state.currentTotal / this.state.people.length;
         }
         else {
             let count = 0;
             this.state.people.forEach(item => {
-                if(item.checked) {
+                if (item.checked) {
                     count++;
                 }
             })
             splitAmount = this.state.currentTotal / count;
         }
-        
+
         this.state.people.forEach(item => {
-            if(!this.state.selectSplit || (this.state.selectSplit && item.checked)) {
+            if (!this.state.selectSplit || (this.state.selectSplit && item.checked)) {
                 let total = item.total;
                 total += splitAmount;
                 let taxP = total / this.state.totalBeforeTax;
@@ -153,8 +152,8 @@ export default class ImageScreen extends React.Component {
         });
 
         this.setState({
-            totalBeforeTax: 0,       
-            currentTotal: null,             
+            totalBeforeTax: 0,
+            currentTotal: null,
             tax: 0,
             tip: 0,
             tipPercent: 0,
@@ -163,7 +162,7 @@ export default class ImageScreen extends React.Component {
             newItem: null,
             done: false,
             splitOpts: false,
-            selectSplit: false             
+            selectSplit: false
         })
     }
 
@@ -171,11 +170,11 @@ export default class ImageScreen extends React.Component {
         let inputDisplay;
         if (this.state.currentDisplay === 0) {
             inputDisplay =
-                <View>
-                    <Text>Total before tax: </Text>
+                <View style={styles.container1}>
+                    <Text style={styles.textLabel}>Total before tax: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ totalBeforeTax: input, currentTotal: input })}
-                        style={{ backgroundColor: '#afccdb' }}
+                        style={styles.textInput}
                         placeholder="0.00"
                         // value={`${this.state.totalBeforeTax}`}
                         keyboardType='numeric'
@@ -185,12 +184,12 @@ export default class ImageScreen extends React.Component {
         }
         else if (this.state.currentDisplay === 1) {
             inputDisplay =
-                <View>
-                    <Text>Total before tax: {this.state.totalBeforeTax}</Text>
-                    <Text>Tax: </Text>
+                <View style={styles.container1}>
+                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Tax: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ tax: input })}
-                        style={{ backgroundColor: '#afccdb' }}
+                        style={styles.textInput}
                         placeholder="0.00"
                         // value={`${this.state.tax}`}
                         keyboardType='numeric'
@@ -200,13 +199,13 @@ export default class ImageScreen extends React.Component {
         }
         else if (this.state.currentDisplay === 2) {
             inputDisplay =
-                <View>
-                    <Text>Total before tax: {this.state.totalBeforeTax}</Text>
-                    <Text>Tax: {this.state.tax}</Text>
-                    <Text>Tip: </Text>
+                <View style={styles.container1}>
+                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Tax: {this.state.tax}</Text>
+                    <Text style={styles.textLabel}>Tip: </Text>
                     <TextInput
                         onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
-                        style={{ backgroundColor: '#afccdb' }}
+                        style={styles.textInput}
                         placeholder="Enter Percentage"
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
@@ -216,10 +215,10 @@ export default class ImageScreen extends React.Component {
         }
         else if (this.state.currentDisplay === 3) {
             inputDisplay =
-                <View>
-                    <Text>Total before tax: {this.state.totalBeforeTax}</Text>
-                    <Text>Tax: {this.state.tax}</Text>
-                    <Text>Tip: {this.state.tip}</Text>
+                <View style={styles.container1}>
+                    <Text style={styles.textLabel}>Total before tax: {this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Tax: {this.state.tax}</Text>
+                    <Text style={styles.textLabel}>Tip: {this.state.tip}</Text>
 
                 </View>
         }
@@ -230,6 +229,7 @@ export default class ImageScreen extends React.Component {
                 <Button
                     title="Next"
                     onPress={this.nextDisplay}
+                    styleButton={{ backgroundColor: 'white' }}
                 />
         }
         let prevBtn;
@@ -243,20 +243,20 @@ export default class ImageScreen extends React.Component {
 
         let splitBtn;
         if (!this.state.done && this.state.currentDisplay === 3 && this.state.currentTotal !== 0) {
-            if(!this.state.splitOpts) {
-            splitBtn =
-                <View>
-                    <Text>Remaining Amount: {this.state.currentTotal}</Text>
-                    <Button
-                        title="Split"
-                        onPress={() => this.setState({splitOpts: true})}
-                    />
-                </View>
+            if (!this.state.splitOpts) {
+                splitBtn =
+                    <View>
+                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Button
+                            title="Split"
+                            onPress={() => this.setState({ splitOpts: true })}
+                        />
+                    </View>
             }
             else if (this.state.selectSplit) {
                 splitBtn =
                     <View>
-                        <Text>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
                         <Button
                             title="Split"
                             onPress={this.splitBill}
@@ -264,16 +264,16 @@ export default class ImageScreen extends React.Component {
                     </View>
             }
             else {
-                splitBtn = 
+                splitBtn =
                     <View>
-                        <Text>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
                         <Button
                             title="With Everyone"
                             onPress={this.splitBill}
                         />
                         <Button
                             title="Select People"
-                            onPress={() => this.setState({selectSplit: true})}
+                            onPress={() => this.setState({ selectSplit: true })}
                         />
                     </View>
             }
@@ -289,19 +289,19 @@ export default class ImageScreen extends React.Component {
                             key={index}
                             id={index}
                             people={element}
-                            currentTotal = {this.state.currentTotal}
+                            currentTotal={this.state.currentTotal}
                             //newItem = {this.state.newItem}
                             handleItemChange={this.handleItemChange}
                             addItem={() => this.addItem(index)}
-                            deleteItem={(personId, index)=> this.deleteItem(personId, index)}
-                            checked = {this.state.checked}
-                            handleChecked = {(id) => this.handleChecked(id)}
-                            selectSplit = {this.state.selectSplit}
+                            deleteItem={(personId, index) => this.deleteItem(personId, index)}
+                            checked={this.state.checked}
+                            handleChecked={(id) => this.handleChecked(id)}
+                            selectSplit={this.state.selectSplit}
                         />
-                    })} 
+                    })}
                 </View>
-        
-            resetBtn = 
+
+            resetBtn =
                 <Button
                     title="Reset"
                     onPress={this.reset}
@@ -318,19 +318,25 @@ export default class ImageScreen extends React.Component {
         }
 
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                {inputDisplay}
-                <View>
-                    {nextBtn}
-                    {prevBtn}
-                    {splitBtn}
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, backgroundColor: "#6b7a8f" }}>
+                    <View style={styles.inputContainer}>
+                        {inputDisplay}
+                    </View>
+                    <View style={styles.inputContainer}>
+                        {nextBtn}
+                        {prevBtn}
+                        {splitBtn}
+                    </View>
                 </View>
                 {getTotal}
-                {peopleDsp}
-                 
-                <View>
-                    {resetBtn}
-                </View> 
+                <View style={{ flex: 2, backgroundColor: "#dcc7aa" }}>
+                    {peopleDsp}
+                    <View>
+                        {resetBtn}
+                    </View>
+                </View>
+
 
             </View>
         );
