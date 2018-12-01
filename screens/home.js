@@ -15,11 +15,13 @@ export default class HomeScreen extends React.Component {
     }
 
     addPeople = () => {
-        this.setState({ personCount: this.state.personCount + 1 })
-        var newPerson = `Person ${this.state.personCount}`;
-        var peopleArr = this.state.people.concat({ name: newPerson, nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 })
-        this.setState({ people: peopleArr })
-        // console.log(this.state.people);
+        if(this.state.personCount < 9){
+            this.setState({ personCount: this.state.personCount + 1 })
+            var newPerson = `Person ${this.state.personCount}`;
+            var peopleArr = this.state.people.concat({ name: newPerson, nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 })
+            this.setState({ people: peopleArr })
+            // console.log(this.state.people);
+        }
     }
 
     handleItemChange = (input) => {
@@ -45,6 +47,7 @@ export default class HomeScreen extends React.Component {
                         placeholder="Enter Name"
                         onChangeText={(input) => this.handleItemChange(input)}
                         returnKeyType='done'
+                        maxLength = {10}
                     >
 
                     </TextInput>

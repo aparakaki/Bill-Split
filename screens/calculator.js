@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, TextInput } from 'react-native';
+import { Image, Text, View, TextInput, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import Person from "../assets/components/Person";
 import styles from "../assets/css/calculator";
@@ -298,7 +298,7 @@ export default class ImageScreen extends React.Component {
         let resetBtn;
         if (this.state.currentDisplay === 3) {
             peopleDsp =
-                <View>
+                <ScrollView>
                     {this.state.people.map((element, index) => {
                         return <Person
                             key={index}
@@ -314,15 +314,16 @@ export default class ImageScreen extends React.Component {
                             selectSplit={this.state.selectSplit}
                         />
                     })}
-                </View>
+                
 
-            resetBtn =
+            {resetBtn =
                 <Button
                     title="Reset"
                     onPress={this.reset}
                     buttonStyle={styles.resetBtn}
                     titleStyle={styles.buttonTitle}
-                />
+                />}
+                </ScrollView>
         }
 
         let getTotal;

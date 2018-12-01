@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView } from 'react-native';
+import { CheckBox, Button, Icon } from 'react-native-elements';
 
 
 export default class Person extends React.Component {
@@ -14,21 +14,23 @@ export default class Person extends React.Component {
     renderInputBox = () => {
         if(this.props.currentTotal > 0){
             return(
-                <View>
+                <View style = {styles.addItems}>
                 <TextInput
                 placeholder = "00.00"
                 keyboardType = 'numeric'
                 returnKeyType='done'
-                //value = {this.props.newItem}
+                maxLength = {5}
                 onChangeText={(input) => this.props.handleItemChange(input)}
-            
+                style ={{
+                    height: 25
+                }}
                 />
-                <Button
-                title = "Add"
+                <Icon
+                name = "add-shopping-cart"
                 onPress = {this.props.addItem}
                 />
                 </View>
-            )
+            ) 
         }
     }
     componentDidMount(){
@@ -53,37 +55,79 @@ export default class Person extends React.Component {
     }
     render () {
     return (
-        <View>
+        
+        <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled>
             {this.renderCheckboxes()}
-            <Text>{this.props.people.name} </Text>
+            <Text style = {{
+                fontSize: 25,
+                padding: 10
+            }}>{this.props.people.name} </Text>
+            <View style ={styles.items}>
+            <Text style = {{
+                fontSize: 20
+            }}>Items</Text>
             {this.props.people.items.map((item, index) => {
                 return(
-                <View 
-                key = {index + 1}>
-                    <Text
-                    key ={index + 2}
-                    >Items
-                    </Text>
-                    <Text
-                    key ={index}
-                    >${item} 
-                    </Text> 
-                    <Button
+                <View  key = {index + 1}>
+                    
+                    <View style = {styles.eachItem}>
+                    <Text key ={index} 
+                    style = {{
+                        fontSize: 15
+                    }}>${item} </Text> 
+                    <Icon
                     key = {item}
-                    title = "x"
+                    size = {15}
+                    name = "cancel"
                     onPress = {() => this.props.deleteItem(this.props.id, index)}
-                    >
-                    </Button>
+                    />
+                    </View>
                 </View>
                 )
             })} 
-            <Text>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
-            <Text>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
-            <Text>Total: ${(this.props.people.total).toFixed(2)}</Text>
+            </View>
+            <View style={styles.totals}>
+            <Text style = {{fontSize: 20}}>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
+            <Text style = {{fontSize: 20}}>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
+            <Text style = {{fontSize: 20}}>Total: ${(this.props.people.total).toFixed(2)}</Text>
+            </View>
             
             {this.renderInputBox()}
             
-        </View>
+        </KeyboardAvoidingView>
+        
     ) 
     }
 }
+const styles = StyleSheet.create({
+    
+    container: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "#F4DECB",
+        marginTop: 10,
+        borderRadius: 8,
+
+        
+
+    },
+    totals: {
+        flexDirection: "column",
+        padding: 10
+        
+    },
+    items: {
+        flexDirection: 'column',
+        padding: 10
+    },
+    eachItem: {
+        flexDirection: "row",
+        
+    },
+    addItems: {
+        flexDirection: 'column',
+        padding: 10
+    }
+   
+
+});
