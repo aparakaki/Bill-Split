@@ -89,7 +89,9 @@ export default class ImageScreen extends React.Component {
     prevDisplay = () => {
         let display = this.state.currentDisplay - 1;
         this.setState({
-            currentDisplay: display
+            currentDisplay: display,
+            splitOpts: false,
+            selectSplit: false
         });
     }
 
@@ -177,6 +179,7 @@ export default class ImageScreen extends React.Component {
                         onChangeText={(input) => this.setState({ totalBeforeTax: input, currentTotal: input })}
                         style={styles.textInput}
                         placeholder="0.00"
+                        placeholderTextColor="white"
                         // value={`${this.state.totalBeforeTax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
@@ -192,6 +195,7 @@ export default class ImageScreen extends React.Component {
                         onChangeText={(input) => this.setState({ tax: input })}
                         style={styles.textInput}
                         placeholder="0.00"
+                        placeholderTextColor="white"
                         // value={`${this.state.tax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
@@ -207,7 +211,7 @@ export default class ImageScreen extends React.Component {
                     <TextInput
                         onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
                         style={styles.textInput}
-                        placeholder="Enter Percentage"
+                        placeholder="%"
                         placeholderTextColor='#ffffff'
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
@@ -356,9 +360,9 @@ export default class ImageScreen extends React.Component {
                     <View style={styles.peopleContainer}>
                         {peopleDsp}
                     </View>
-                    <View>
+                    {/* <View>
                         {resetBtn}
-                    </View>
+                    </View> */}
                 </View>
 
 

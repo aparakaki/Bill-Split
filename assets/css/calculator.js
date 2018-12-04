@@ -31,7 +31,8 @@ export default StyleSheet.create({
         fontSize: 20,
         backgroundColor:'#6b7a8f',
         color: "white",
-        marginTop: 15
+        marginTop: 15,
+        textAlign: 'center'
     },
     textLabel2:{
         fontSize: 20,

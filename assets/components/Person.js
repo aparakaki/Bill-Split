@@ -46,7 +46,8 @@ export default class Person extends React.Component {
         if(this.props.selectSplit){
             return (
             <CheckBox
-            title = "split" 
+            title = "split"
+            containerStyle = {styles.checkBox}
             checked = {this.state.checked}
             onPress={() => this.setChecked(this.props.id)}
             /> 
@@ -127,6 +128,11 @@ const styles = StyleSheet.create({
     addItems: {
         flexDirection: 'column',
         padding: 10
+    },
+    checkBox: {
+        backgroundColor: "#F4DECB",
+        borderWidth: 0,
+        justifyContent: 'center',
     }
    
 
