@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, Text, View, TextInput, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import Person from "../assets/components/Person";
 import styles from "../assets/css/calculator";
 
@@ -232,22 +232,36 @@ export default class ImageScreen extends React.Component {
         let nextBtn;
         if (this.state.currentDisplay < 3) {
             nextBtn =
-                <Button
-                    title="Next"
+                <Icon
+                    name="arrow-right-thick"
+                    type="material-community"
+                    iconStyle={styles.iconStyle}
+                    containerStyle={styles.iconCointainer}
                     onPress={this.nextDisplay}
-                    buttonStyle={styles.button}
-                    titleStyle={styles.buttonTitle}
-                />
+                />    
+                // <Button
+                //     title='Next'
+                //     onPress={this.nextDisplay}
+                //     buttonStyle={styles.button}
+                //     titleStyle={styles.buttonTitle}
+                // />
         }
         let prevBtn;
         if (this.state.currentDisplay > 0 && !this.state.done) {
             prevBtn =
-                <Button
-                    title="Prev"
-                    onPress={this.prevDisplay}
-                    buttonStyle={styles.button}
-                    titleStyle={styles.buttonTitle}
-                />
+                <Icon
+                name="arrow-left-thick"
+                type="material-community"
+                iconStyle={styles.iconStyle}
+                containerStyle={styles.iconCointainer}
+                onPress={this.prevDisplay}
+                /> 
+                // <Button
+                //     title="Prev"
+                //     onPress={this.prevDisplay}
+                //     buttonStyle={styles.button}
+                //     titleStyle={styles.buttonTitle}
+                // />
         }
 
         let splitBtn;
@@ -302,7 +316,7 @@ export default class ImageScreen extends React.Component {
         let resetBtn;
         if (this.state.currentDisplay === 3) {
             peopleDsp =
-                <ScrollView>
+                <ScrollView >
                     {this.state.people.map((element, index) => {
                         return <Person
                             key={index}

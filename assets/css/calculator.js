@@ -55,7 +55,20 @@ export default StyleSheet.create({
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 5,
+        marginTop: 20,
+        // width: 100
+    },
+    iconStyle: {
+        padding: 10,
+        color: 'white'
+    },
+    iconCointainer: {
+        backgroundColor: "#f7c331",
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 5,
         marginTop: 15,
-        // width: 300
+        marginRight: 10,
+        marginLeft: 10
     }
 });
