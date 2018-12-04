@@ -51,7 +51,7 @@ export default StyleSheet.create({
         marginTop: 20
     },
     resetBtn: {
-        backgroundColor: "#a0a2a5",
+        backgroundColor: "#f7882f",
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 5,

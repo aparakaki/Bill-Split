@@ -357,7 +357,7 @@ export default class ImageScreen extends React.Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: "#6b7a8f" }}>
+                <ScrollView style={{ flex: 1, backgroundColor: "#6b7a8f" }}>
                     <View style={styles.inputContainer}>
                         {inputDisplay}
                     </View>
@@ -369,7 +369,7 @@ export default class ImageScreen extends React.Component {
                         {splitBtn}
                         {getTotal}
                     </View>
-                </View>
+                </ScrollView>
                 <View style={{ flex: 2, backgroundColor: "#dcc7aa" }}>
                     <View style={styles.peopleContainer}>
                         {peopleDsp}

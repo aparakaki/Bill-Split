@@ -5,7 +5,7 @@ import { Button, Icon } from 'react-native-elements';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
-        title: 'Split',
+        title: 'Split-It',
     };
 
     state = {
@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
     }
 
     addPeople = () => {
-        if(this.state.personCount < 9){
+        if(this.state.personCount < 8){
             this.setState({ personCount: this.state.personCount + 1 })
             var newPerson = `Person ${this.state.personCount}`;
             var peopleArr = this.state.people.concat({ name: newPerson, nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 })
@@ -85,44 +85,42 @@ export default class HomeScreen extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled>
-                <Text style={{ 
+                {/* <Text style={{ 
                     textAlign: "center", 
                     padding: 10, 
                     fontSize: 30 }}>
-                    Select Amount of People</Text>
+                    Select Amount of People</Text> */}
 
                 <View style={styles.amount}>
 
-                    <Button
-                        buttonStyle={styles.setAmount}
+                    <Icon
+                        containerStyle={styles.setAmount}
+                        iconStyle = {styles.setAmountIcon}
                         onPress={this.removePeople}
-                        title="-"
+                        name="minus"
+                        type="material-community"
+                        
                     />
                     <Text style={{
-                        // paddingTop: 10,
-                        // paddingBottom: 10,
-                        // paddingRight: 15,
-                        // paddingLeft: 15,
-                        fontSize: 40,
-                        // backgroundColor: "pink",
-                        // flex: 3 / 4,
+                        marginLeft: 10,
+                        fontSize: 100,
                         textAlign: "center",
-                        justifyContent: "center"
-                        // borderWidth: 0,
-                        // borderRadius: 5, 
+                        justifyContent: "center" 
                         
                     }}
                     >{this.state.personCount}  
                     </Text> 
                     <Icon
                         name='person'   
-                        size = {40}
+                        size = {100}
                         color= "#6B7A8F"
                         />
-                    <Button
-                        buttonStyle={styles.setAmount}
+                    <Icon
+                        containerStyle={styles.setAmount}
+                        iconStyle={styles.setAmountIcon}
                         onPress={this.addPeople}
-                        title="+"
+                        name="plus"
+                        type="material-community"
                     />
                 </View> 
                 <View style={styles.people}>
@@ -145,7 +143,7 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.nextReset}>
                     <Button
                         buttonStyle={{
-                            backgroundColor: "#F7C331",
+                            backgroundColor: "#F7882f",
                             borderColor: "transparent",
                             borderWidth: 0,
                             borderRadius: 5,
@@ -157,7 +155,7 @@ export default class HomeScreen extends React.Component {
                     />
                     <Button
                         buttonStyle={{
-                            backgroundColor: "#F7882F",
+                            backgroundColor: "#F7c331",
                             borderColor: "transparent",
                             borderWidth: 0,
                             borderRadius: 5,
@@ -181,21 +179,25 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-around",
         backgroundColor: "#F4DECB",
-        
-
-
     }, 
   
     amount: {
         flexDirection: "row",
         justifyContent: "center",
+        alignItems: "center"
 
     },
     setAmount: {
-        paddingLeft: 15,
-        paddingRight: 15, 
+        paddingLeft: 10,
+        paddingRight: 10, 
         borderRadius: 5,
-        backgroundColor: "#6B7A8F"
+        backgroundColor: "#6B7A8F",
+        height: 50,
+        width: 50
+    },
+    setAmountIcon: {
+        color: "white",
+        
     },
     people: { 
         flexDirection: "row",

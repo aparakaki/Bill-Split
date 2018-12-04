@@ -22,12 +22,13 @@ export default class Person extends React.Component {
                 maxLength = {5}
                 onChangeText={(input) => this.props.handleItemChange(input)}
                 style ={{
-                    height: 25
+                    fontSize: 20
                 }}
                 />
                 <Icon
                 name = "add-shopping-cart"
                 onPress = {this.props.addItem}
+                
                 />
                 </View>
             ) 
@@ -46,9 +47,10 @@ export default class Person extends React.Component {
         if(this.props.selectSplit){
             return (
             <CheckBox
-            title = "split"
+            // title = "split"
             containerStyle = {styles.checkBox}
             checked = {this.state.checked}
+            checkedColor = "#f7882f"
             onPress={() => this.setChecked(this.props.id)}
             /> 
             )
@@ -60,12 +62,14 @@ export default class Person extends React.Component {
         <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled>
             {this.renderCheckboxes()}
             <Text style = {{
-                fontSize: 25,
-                padding: 10
+                fontSize: 20,
+                padding: 10,
+                color: "#6B7A8F"
             }}>{this.props.people.name} </Text>
             <View style ={styles.items}>
             <Text style = {{
-                fontSize: 20
+                fontSize: 18,
+                color: "#6B7A8F"
             }}>Items</Text>
             {this.props.people.items.map((item, index) => {
                 return(
@@ -88,9 +92,17 @@ export default class Person extends React.Component {
             })} 
             </View>
             <View style={styles.totals}>
-            <Text style = {{fontSize: 20}}>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
-            <Text style = {{fontSize: 20}}>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
-            <Text style = {{fontSize: 20}}>Total: ${(this.props.people.total).toFixed(2)}</Text>
+            <Text style = {{
+                fontSize: 15,
+                color: "#6B7A8F"
+                }}>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
+            <Text style = {{
+                fontSize: 15,
+                color: "#6B7A8F"
+                }}>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
+            <Text style = {{
+                fontSize: 15,
+                }}>Total: ${(this.props.people.total).toFixed(2)}</Text>
             </View>
             
             {this.renderInputBox()}
@@ -133,6 +145,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F4DECB",
         borderWidth: 0,
         justifyContent: 'center',
+        padding: 0
     }
    
 
