@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "app-test2",
-    "description": "This project is really great.",
-    "slug": "app-test2",
+    "name": "Split-It",
+    "description": "App to split the bill between friends",
+    "icon": "./assets/images/group.png",
+    "slug": "Split-It",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
