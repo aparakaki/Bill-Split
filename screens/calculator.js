@@ -192,7 +192,7 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 1) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax.toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tax: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ tax: input })}
@@ -209,8 +209,8 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 2) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
-                    <Text style={styles.textLabel}>Tax: ${this.state.tax}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax.toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tip: </Text>
                     <TextInput
                         onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
@@ -227,9 +227,9 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 3) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax}</Text>
-                    <Text style={styles.textLabel}>Tax: ${this.state.tax}</Text>
-                    <Text style={styles.textLabel}>Tip: ${this.state.tip}</Text>
+                    <Text style={styles.textLabel}>Total before tax: ${this.state.totalBeforeTax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tip: ${this.state.tip.toFixed(2)}</Text>
 
                 </View>
         }
@@ -274,7 +274,7 @@ export default class ImageScreen extends React.Component {
             if (!this.state.splitOpts) {
                 splitBtn =
                     <View>
-                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel}>Remaining Amount: {this.state.currentTotal.toFixed(2)}</Text>
                         <Button
                             title="Split"
                             onPress={() => this.setState({ splitOpts: true })}
@@ -286,7 +286,7 @@ export default class ImageScreen extends React.Component {
             else if (this.state.selectSplit) {
                 splitBtn =
                     <View>
-                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal.toFixed(2)}</Text>
                         <Button
                             title="Split"
                             onPress={this.splitBill}
@@ -298,7 +298,7 @@ export default class ImageScreen extends React.Component {
             else {
                 splitBtn =
                     <View style={styles.inputContainer}>
-                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal}</Text>
+                        <Text style={styles.textLabel2}>Remaining Amount: {this.state.currentTotal.toFixed(2)}</Text>
                         <View style={styles.btnContainer}>
                             <Button
                                 title="With Everyone"
