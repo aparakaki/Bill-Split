@@ -150,7 +150,9 @@ export default class ImageScreen extends React.Component {
 
     reset = () => {
         this.state.people.forEach(item => {
-            item.total = 0;
+            item.total = 0,
+            item.tax = 0,
+            item.tip = 0,
             item.items = []
         });
 
@@ -182,7 +184,7 @@ export default class ImageScreen extends React.Component {
                         placeholderTextColor="white"
                         // value={`${this.state.totalBeforeTax}`}
                         keyboardType='numeric'
-                        // returnKeyType='done'
+                        returnKeyType='done'
                         autoFocus={true}
                     />
                 </View>
@@ -199,7 +201,7 @@ export default class ImageScreen extends React.Component {
                         placeholderTextColor="white"
                         // value={`${this.state.tax}`}
                         keyboardType='numeric'
-                        // returnKeyType='done'
+                        returnKeyType='done'
                         autoFocus={true}
                     />
                 </View>
@@ -217,7 +219,7 @@ export default class ImageScreen extends React.Component {
                         placeholderTextColor='#ffffff'
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
-                        // returnKeyType='done'
+                        returnKeyType='done'
                         autoFocus={true}
                     />
                 </View>
