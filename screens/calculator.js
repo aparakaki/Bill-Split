@@ -176,7 +176,7 @@ export default class ImageScreen extends React.Component {
         if (this.state.currentDisplay === 0) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: </Text>
+                    <Text style={styles.textLabel}>Subtotal: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ totalBeforeTax: input, currentTotal: input })}
                         style={styles.textInput}
@@ -192,7 +192,7 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 1) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tax: </Text>
                     <TextInput
                         onChangeText={(input) => this.setState({ tax: input })}
@@ -209,7 +209,7 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 2) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tax: ${parseFloat(this.state.tax).toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tip: </Text>
                     <TextInput
@@ -227,7 +227,7 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 3) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Total before tax: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tax: ${parseFloat(this.state.tax).toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tip: ${parseFloat(this.state.tip).toFixed(2)}</Text>
 
