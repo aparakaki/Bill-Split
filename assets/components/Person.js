@@ -62,7 +62,7 @@ export default class Person extends React.Component {
         <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled>
             {this.renderCheckboxes()}
             <Text style = {{
-                fontSize: 20,
+                fontSize: 18,
                 padding: 10,
                 color: "#6B7A8F"
             }}>{this.props.people.name} </Text>
@@ -119,10 +119,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         backgroundColor: "#F4DECB",
         marginTop: 10,
-        borderRadius: 8,
-
-        
-
+        borderRadius: 8
     },
     totals: {
         flexDirection: "column",

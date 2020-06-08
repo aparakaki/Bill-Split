@@ -147,10 +147,9 @@ export default class HomeScreen extends React.Component {
                             borderColor: "transparent",
                             borderWidth: 0,
                             borderRadius: 5,
-
-
+                            margin: 15
                         }}
-                        title="reset"
+                        title="Reset"
                         onPress={this.reset}
                     />
                     <Button
@@ -159,8 +158,7 @@ export default class HomeScreen extends React.Component {
                             borderColor: "transparent",
                             borderWidth: 0,
                             borderRadius: 5,
-
-
+                            margin: 15,
                         }}
                         onPress={() => navigate('Calculator', { people: this.state.people })}
                         title="Next"
@@ -185,19 +183,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
-
     },
     setAmount: {
-        paddingLeft: 10,
-        paddingRight: 10, 
+        paddingHorizontal: 10,
         borderRadius: 5,
         backgroundColor: "#6B7A8F",
         height: 50,
-        width: 50
+        width: 50,
+        justifyContent: 'center',
     },
     setAmountIcon: {
         color: "white",
-        
     },
     people: { 
         flexDirection: "row",

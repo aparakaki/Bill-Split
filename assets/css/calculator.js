@@ -6,10 +6,13 @@ export default StyleSheet.create({
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 5,
-        marginTop: 15
+        marginTop: 10,
+        marginHorizontal: 10
     },
     buttonTitle: {
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 15
     },
     inputContainer: {
         alignItems: 'center', 
@@ -24,18 +27,18 @@ export default StyleSheet.create({
         paddingTop: 20,
     },
     textLabel: {
-        fontSize: 20,
+        fontSize: 16,
         color: "white"
     },
     textInput: {
-        fontSize: 20,
+        fontSize: 16,
         backgroundColor:'#6b7a8f',
         color: "white",
         marginTop: 15,
         textAlign: 'center'
     },
     textLabel2:{
-        fontSize: 20,
+        fontSize: 16,
         backgroundColor:'#6b7a8f',
         color: "white",
         // marginBottom: 15

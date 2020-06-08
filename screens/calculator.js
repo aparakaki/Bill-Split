@@ -54,7 +54,6 @@ export default class ImageScreen extends React.Component {
             })
         }
         // console.log(this.state.newItem)
-        console.log(this.state.people[index]);
 
     }
 
@@ -80,6 +79,7 @@ export default class ImageScreen extends React.Component {
         if ((display === 0 && this.state.totalBeforeTax > 0) ||
             display === 1 || display === 2) {
             display += 1;
+            console.log(display)
             this.setState({
                 currentDisplay: display
             });
@@ -185,6 +185,7 @@ export default class ImageScreen extends React.Component {
                         // value={`${this.state.totalBeforeTax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
+                        onSubmitEditing={this.nextDisplay}
                         autoFocus={true}
                     />
                 </View>
@@ -202,6 +203,7 @@ export default class ImageScreen extends React.Component {
                         // value={`${this.state.tax}`}
                         keyboardType='numeric'
                         returnKeyType='done'
+                        onSubmitEditing={this.nextDisplay}
                         autoFocus={true}
                     />
                 </View>
@@ -220,6 +222,7 @@ export default class ImageScreen extends React.Component {
                         // value={`${this.state.tipPercent}`}
                         keyboardType='numeric'
                         returnKeyType='done'
+                        onSubmitEditing={this.nextDisplay}
                         autoFocus={true}
                     />
                 </View>
@@ -375,7 +378,7 @@ export default class ImageScreen extends React.Component {
                         {getTotal}
                     </View>
                 </ScrollView>
-                <View style={{ flex: 2, backgroundColor: "#dcc7aa" }}>
+                <View style={{ flex: 2, backgroundColor: "#dcc7aa", paddingHorizontal: 10 }}>
                     <View style={styles.peopleContainer}>
                         {peopleDsp}
                     </View>
@@ -383,8 +386,6 @@ export default class ImageScreen extends React.Component {
                         {resetBtn}
                     </View> */}
                 </View>
-
-
             </View>
         );
     }
