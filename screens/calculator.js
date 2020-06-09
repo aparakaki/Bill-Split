@@ -24,7 +24,6 @@ export default class ImageScreen extends React.Component {
 
     componentDidMount() {
         console.log("start")
-        // console.log(this.state.people);
     }
 
     handleChecked = (id) => {
@@ -37,11 +36,8 @@ export default class ImageScreen extends React.Component {
     }
     addItem = (index) => {
         console.log("add item")
-        // console.log("current: " + this.state.currentTotal)
-        // console.log("new item: " + this.state.newItem)
         if (this.state.newItem && parseFloat(this.state.newItem) <= parseFloat(this.state.currentTotal)) {
             this.state.people[index].items = this.state.people[index].items.concat(this.state.newItem)
-            //this.forceUpdate()
             let total = 0;
             this.state.people[index].items.forEach(item => {
                 total += parseFloat(item)
@@ -53,8 +49,6 @@ export default class ImageScreen extends React.Component {
                 currentTotal: newTotal
             })
         }
-        // console.log(this.state.newItem)
-
     }
 
     deleteItem = (personId, index) => {
@@ -79,7 +73,6 @@ export default class ImageScreen extends React.Component {
         if ((display === 0 && this.state.totalBeforeTax > 0) ||
             display === 1 || display === 2) {
             display += 1;
-            console.log(display)
             this.setState({
                 currentDisplay: display
             });
@@ -116,12 +109,14 @@ export default class ImageScreen extends React.Component {
             splitAmount = this.state.currentTotal / count;
         }
 
-        this.state.people.forEach(item => {
+        let remainingAmt = this.state.totalBeforeTax + this.state.tip + this.state.tax;
+        console.log(remainingAmt);
+        this.state.people.forEach((item, index) => {
             if (!this.state.selectSplit || (this.state.selectSplit && item.checked)) {
                 let total = item.total;
                 total += splitAmount;
-                let taxP = total / this.state.totalBeforeTax;
-                let tax = taxP * this.state.tax;
+                let taxP = this.state.tax / this.state.totalBeforeTax;
+                let tax = taxP * total;
                 let tip = this.state.tipPercent / 100 * total;
                 total += tax + tip;
                 item.total = total;
@@ -130,13 +125,17 @@ export default class ImageScreen extends React.Component {
             }
             else if (this.state.selectSplit && !item.checked) {
                 let total = item.total;
-                let taxP = total / this.state.totalBeforeTax;
-                let tax = taxP * this.state.tax;
+                let taxP = this.state.tax / this.state.totalBeforeTax;
+                let tax = taxP * total;
                 let tip = this.state.tipPercent / 100 * total;
                 total += tax + tip;
                 item.total = total;
                 item.tax = tax;
                 item.tip = tip;
+            }
+            remainingAmt -= item.total.toFixed(2);
+            if(this.state.people.length - 1 === index && remainingAmt !== 0){
+                item.total += remainingAmt;
             }
         });
 
@@ -153,7 +152,8 @@ export default class ImageScreen extends React.Component {
             item.total = 0,
             item.tax = 0,
             item.tip = 0,
-            item.items = []
+            item.items = [],
+            item.checked = false
         });
 
         this.setState({
@@ -178,7 +178,7 @@ export default class ImageScreen extends React.Component {
                 <View style={styles.container1}>
                     <Text style={styles.textLabel}>Subtotal: </Text>
                     <TextInput
-                        onChangeText={(input) => this.setState({ totalBeforeTax: input, currentTotal: input })}
+                        onChangeText={(input) => this.setState({ totalBeforeTax: parseFloat(input), currentTotal: input })}
                         style={styles.textInput}
                         placeholder="0.00"
                         placeholderTextColor="white"
@@ -193,10 +193,10 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 1) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${this.state.totalBeforeTax.toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tax: </Text>
                     <TextInput
-                        onChangeText={(input) => this.setState({ tax: input })}
+                        onChangeText={(input) => this.setState({ tax: parseFloat(input) })}
                         style={styles.textInput}
                         placeholder="0.00"
                         placeholderTextColor="white"
@@ -211,11 +211,11 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 2) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
-                    <Text style={styles.textLabel}>Tax: ${parseFloat(this.state.tax).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${this.state.totalBeforeTax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax.toFixed(2)}</Text>
                     <Text style={styles.textLabel}>Tip: </Text>
                     <TextInput
-                        onChangeText={(input) => { this.setState({ tipPercent: input }); this.setTipAmount(input) }}
+                        onChangeText={(input) => { this.setState({ tipPercent: parseFloat(input) }); this.setTipAmount(input) }}
                         style={styles.textInput}
                         placeholder="%"
                         placeholderTextColor='#ffffff'
@@ -230,9 +230,9 @@ export default class ImageScreen extends React.Component {
         else if (this.state.currentDisplay === 3) {
             inputDisplay =
                 <View style={styles.container1}>
-                    <Text style={styles.textLabel}>Subtotal: ${parseFloat(this.state.totalBeforeTax).toFixed(2)}</Text>
-                    <Text style={styles.textLabel}>Tax: ${parseFloat(this.state.tax).toFixed(2)}</Text>
-                    <Text style={styles.textLabel}>Tip: ${parseFloat(this.state.tip).toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Subtotal: ${this.state.totalBeforeTax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tax: ${this.state.tax.toFixed(2)}</Text>
+                    <Text style={styles.textLabel}>Tip: ${this.state.tip.toFixed(2)}</Text>
 
                 </View>
         }
@@ -247,12 +247,6 @@ export default class ImageScreen extends React.Component {
                     containerStyle={styles.iconCointainer}
                     onPress={this.nextDisplay}
                 />    
-                // <Button
-                //     title='Next'
-                //     onPress={this.nextDisplay}
-                //     buttonStyle={styles.button}
-                //     titleStyle={styles.buttonTitle}
-                // />
         }
         let prevBtn;
         if (this.state.currentDisplay > 0 && !this.state.done) {
@@ -264,12 +258,6 @@ export default class ImageScreen extends React.Component {
                 containerStyle={styles.iconCointainer}
                 onPress={this.prevDisplay}
                 /> 
-                // <Button
-                //     title="Prev"
-                //     onPress={this.prevDisplay}
-                //     buttonStyle={styles.button}
-                //     titleStyle={styles.buttonTitle}
-                // />
         }
 
         let splitBtn;
@@ -382,9 +370,6 @@ export default class ImageScreen extends React.Component {
                     <View style={styles.peopleContainer}>
                         {peopleDsp}
                     </View>
-                    {/* <View>
-                        {resetBtn}
-                    </View> */}
                 </View>
             </View>
         );

@@ -16,26 +16,23 @@ export default class Person extends React.Component {
             return(
                 <View style = {styles.addItems}>
                 <TextInput
-                placeholder = "00.00"
-                keyboardType = 'numeric'
-                returnKeyType='done'
-                maxLength = {5}
-                onChangeText={(input) => this.props.handleItemChange(input)}
-                style ={{
-                    fontSize: 20
-                }}
+                    placeholder = "00.00"
+                    keyboardType = 'numeric'
+                    returnKeyType='done'
+                    maxLength = {5}
+                    onChangeText={(input) => this.props.handleItemChange(input)}
+                    style ={{
+                        fontSize: 20
+                    }}
+                    onSubmitEditing = {this.props.addItem}
                 />
                 <Icon
-                name = "add-shopping-cart"
-                onPress = {this.props.addItem}
-                
+                    name = "add-shopping-cart"
+                    onPress = {this.props.addItem}
                 />
                 </View>
             ) 
         }
-    }
-    componentDidMount(){
-        // console.log(this.props.people)
     }
 
     setChecked = (id) => {
@@ -95,14 +92,21 @@ export default class Person extends React.Component {
             <Text style = {{
                 fontSize: 15,
                 color: "#6B7A8F"
-                }}>Tax: ${(this.props.people.tax).toFixed(2)}</Text>
+            }}>
+                Tax: ${(this.props.people.tax).toFixed(2)}
+            </Text>
             <Text style = {{
                 fontSize: 15,
                 color: "#6B7A8F"
-                }}>Tip: ${(this.props.people.tip).toFixed(2)}</Text>
+            }}>
+                Tip: ${(this.props.people.tip).toFixed(2)}
+            </Text>
             <Text style = {{
                 fontSize: 15,
-                }}>Total: ${(this.props.people.total).toFixed(2)}</Text>
+                fontWeight: 'bold'
+            }}>
+                Total: ${(this.props.people.total).toFixed(2)}
+            </Text>
             </View>
             
             {this.renderInputBox()}

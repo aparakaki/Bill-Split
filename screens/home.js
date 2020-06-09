@@ -20,7 +20,6 @@ export default class HomeScreen extends React.Component {
             var newPerson = `Person ${this.state.personCount}`;
             var peopleArr = this.state.people.concat({ name: newPerson, nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 })
             this.setState({ people: peopleArr })
-            // console.log(this.state.people);
         }
     }
 
@@ -68,9 +67,7 @@ export default class HomeScreen extends React.Component {
             this.setState({ personCount: this.state.personCount - 1 })
             var removePeopleArray = this.state.people.slice(0, this.state.people.length - 1)
             this.setState({ people: removePeopleArray })
-            // console.log(this.state.people) 
         }
-
     }
 
     reset = () => {
@@ -79,8 +76,8 @@ export default class HomeScreen extends React.Component {
             people: [{ name: "Me", nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 }, { name: "Person 1", nameSet: false, checked: false, items: [], tax: 0, tip: 0, total: 0 }],
             nameSet: null
         });
-
     }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -143,22 +140,16 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.nextReset}>
                     <Button
                         buttonStyle={{
+                            ...styles.buttonStyle,
                             backgroundColor: "#F7882f",
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 5,
-                            margin: 15
                         }}
                         title="Reset"
                         onPress={this.reset}
                     />
                     <Button
                         buttonStyle={{
+                            ...styles.buttonStyle,
                             backgroundColor: "#F7c331",
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 5,
-                            margin: 15,
                         }}
                         onPress={() => navigate('Calculator', { people: this.state.people })}
                         title="Next"
@@ -213,6 +204,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         paddingTop: 20
+    },
+    buttonStyle: {
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 5,
+        margin: 15,
+        width: 80,
     }
-
 });
